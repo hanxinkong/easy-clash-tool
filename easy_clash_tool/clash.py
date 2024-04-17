@@ -1,6 +1,4 @@
-import argparse
 import json
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urljoin
 from typing import Tuple, List
@@ -10,16 +8,8 @@ from loguru import logger
 from requests import RequestException
 
 
-def read_cli_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--show-group', '-g', action='store_true', default=False, help='查看所有策略组')
-    parser.add_argument('--show-proxies', '-p', action='store_true', default=False, help='查看所有代理')
-    parser.add_argument('--show-selected', '-s', action='store_true', default=False, help='查看已选择代理')
-    return parser.parse_args()
-
-
 class Clash:
-    def __init__(self, base_api: str = 'http://127.0.0.1:9090', group_name: str = 'GLOBAL', delay_timeout: int = 6,
+    def __init__(self, base_api: str = 'http://127.0.0.1:9090', group_name: str = '', delay_timeout: int = 6,
                  verify_url: str = 'https://www.google.com',
                  secret=''):
         self.base_api = base_api
@@ -38,7 +28,7 @@ class Clash:
         selected_rule_group = rule_group[0]
         return rule_group, selected_rule_group
 
-    @retry(num=1)
+    @retry(num=1, )
     def get_proxies(self) -> Tuple[List[str], str]:
         """获取策略组中的所有节点"""
         api_url = urljoin(self.base_api, f'proxies')
@@ -108,7 +98,7 @@ class Clash:
 
             proxies.remove(selected)
 
-        with ThreadPoolExecutor(max_workers=10) as pool:
+        with ThreadPoolExecutor(max_workers=20) as pool:
             futures = [pool.submit(self.verify_proxy, proxy_name) for proxy_name in proxies]
             for future in as_completed(futures):
                 try:
@@ -132,26 +122,3 @@ class Clash:
                         f'[{self.group_name}] <{min_delay_node[0]}> 延迟:{min_delay_node[1]}ms -> 切换到节点失败')
         else:
             logger.error(f'[{self.group_name}] -> 未找到可用节点')
-
-    def clash_cli(self, timeout: int = 20):
-        args = read_cli_args()
-        if args.show_group:
-            rule_group, selected_rule_group = self.get_rule_group()
-            logger.debug(rule_group)
-
-        if args.show_proxies:
-            proxies, selected = self.get_proxies()
-            print(proxies)
-
-        if args.show_selected:
-            proxies, selected = self.get_proxies()
-            print(selected)
-
-        if not any([
-            args.show_group,
-            args.show_proxies,
-            args.show_selected
-        ]):
-            while True:
-                self.auto_switch()
-                time.sleep(timeout)

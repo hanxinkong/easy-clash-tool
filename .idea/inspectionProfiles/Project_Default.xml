@@ -1,0 +1,27 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyInterpreterInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="12">
+            <item index="0" class="java.lang.String" itemvalue="fastapi" />
+            <item index="1" class="java.lang.String" itemvalue="SQLAlchemy" />
+            <item index="2" class="java.lang.String" itemvalue="uvicorn" />
+            <item index="3" class="java.lang.String" itemvalue="httpx" />
+            <item index="4" class="java.lang.String" itemvalue="pydantic" />
+            <item index="5" class="java.lang.String" itemvalue="certifi" />
+            <item index="6" class="java.lang.String" itemvalue="loguru" />
+            <item index="7" class="java.lang.String" itemvalue="rfc3986" />
+            <item index="8" class="java.lang.String" itemvalue="click" />
+            <item index="9" class="java.lang.String" itemvalue="idna" />
+            <item index="10" class="java.lang.String" itemvalue="easy_spider_tool" />
+            <item index="11" class="java.lang.String" itemvalue="Requests" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

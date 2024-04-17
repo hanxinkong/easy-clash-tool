@@ -40,15 +40,26 @@ pip install easy-clash-tool
 ### demo.py
 
 ```python
+import time
 from easy_clash_tool.clash import Clash
 
 clash = Clash(
-    base_api='http://127.0.0.1:9090',
+    base_api='http://127.0.0.1:24621',
+    secret='0367e21c-cceb-43a8-a2db-ad990e80dc28',
+    group_name='',
 )
-clash.clash_cli(timeout=10)
-```
 
-![img.png](res%2Fimg.png)
+# 手动切换
+nodes, selected = clash.get_proxies()
+print(nodes)
+clash.change_node('🎮 Steam 商店/社区')
+
+# 自动切换
+while True:
+    clash.auto_switch()
+    time.sleep(10)
+
+```
 
 参数说明
 
@@ -63,14 +74,29 @@ clash.clash_cli(timeout=10)
 命令行
 
 ```shell
-usage: demo.py [-h] [--show-group] [--show-proxies] [--show-selected]
+usage: easy-clash [-h] [--url URL] [--secret SECRET] [--delay DELAY] [--node-delay NODE_DELAY] [--verify-url VERIFY_URL] [--group_name GROUP_NAME] [--show-group] [--show-proxies]
+               [--show-selected]
 
 optional arguments:
-  -h, --help           show this help message and exit
-  --show-group, -g     查看所有策略组
-  --show-proxies, -p   查看所有代理
-  --show-selected, -s  查看已选择代理
+  -h, --help                                    show this help message and exit
+  --url URL, -u URL                             clash-api 可查看config.yaml文件
+  --secret SECRET, -P SECRET                    密码
+  --delay DELAY, -T DELAY                       自动切换节点间隔时间 单位:秒
+  --node-timeout NODE_TIMEOUT, -t NODE_TIMEOUT  节点超时时间 单位:秒
+  --verify-url VERIFY_URL                       用于测试延时的url
+  --group_name GROUP_NAME                       指定策略组,可先通过 --show-group参数查询可用策略组
+  --show-group, -g                              查看所有策略组
+  --show-proxies, -p                            查看所有代理
+  --show-selected, -s                           查看已选择代理
 ```
+
+命令行示例
+
+```shell
+easy-clash --url http://127.0.0.1:24621 --secret 0367e21c-cceb-43a8-a2db-ad990e80dc28 --delay 10 --verify-url https://www.google.com
+```
+
+![img.png](res%2Fimg.png)
 
 ## 链接
 
