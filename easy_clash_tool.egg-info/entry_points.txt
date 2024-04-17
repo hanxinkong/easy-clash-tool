@@ -1,0 +1,3 @@
+[console_scripts]
+easy-clash = easy_clash_tool:main
+

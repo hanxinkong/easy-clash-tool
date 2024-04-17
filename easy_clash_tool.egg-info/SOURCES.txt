@@ -1,0 +1,11 @@
+README.md
+setup.py
+easy_clash_tool/__init__.py
+easy_clash_tool/clash.py
+easy_clash_tool/main.py
+easy_clash_tool.egg-info/PKG-INFO
+easy_clash_tool.egg-info/SOURCES.txt
+easy_clash_tool.egg-info/dependency_links.txt
+easy_clash_tool.egg-info/entry_points.txt
+easy_clash_tool.egg-info/requires.txt
+easy_clash_tool.egg-info/top_level.txt
